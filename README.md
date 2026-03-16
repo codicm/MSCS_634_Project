@@ -1,4 +1,4 @@
-# Advanced Data Mining Project - Deliverables 1 and 2
+# Advanced Data Mining Project - Deliverables 1, 2, and 3
 
 ## Dataset Summary
 
@@ -100,8 +100,68 @@ These engineered features were designed to capture interaction intensity and nor
 - **Challenge**: Risk of selecting a model from one favorable split.
   - **Resolution**: Used 5-fold cross-validation as the primary ranking signal.
 
+## Deliverable 3: Classification, Clustering, and Pattern Mining
+
+### Objective
+
+Build classification and clustering models, tune a classifier, and apply association rule mining to discover actionable behavioral patterns.
+
+### Classification Models and Tuning
+
+- Classification target: `Customer_Segment` (binary encoded for ROC evaluation)
+- Model 1: Decision Tree Classifier
+- Model 2: k-Nearest Neighbors (k-NN) Classifier
+- Hyperparameter tuning: `GridSearchCV` applied to k-NN over:
+  - `n_neighbors`
+  - `weights`
+  - `metric`
+
+### Classification Evaluation
+
+- Metrics reported:
+  - Confusion matrix
+  - ROC curve
+  - Accuracy
+  - F1 score
+- Why F1 matters here: segment classes are imbalanced, so F1 provides a better precision/recall balance than accuracy alone.
+
+### Clustering Model
+
+- Clustering algorithm: K-Means (`k=3`)
+- Input: standardized behavioral and engineered features
+- Visualization: 2D PCA scatter plot with cluster labels
+- Interpretation: cluster-level mean profile table highlights behavioral differences across groups.
+
+### Association Rule Mining
+
+- Technique: Apriori with association rules
+- Process:
+  - Discretized continuous behavior variables into quantile bins (`low/mid/high`)
+  - Created transaction-like tokenized records
+  - Mined frequent itemsets and high-lift rules
+- Business relevance:
+  - Strong rules indicate co-occurring customer behavior states
+  - Rules can support personalization, recommendations, and campaign triggers.
+
+### Key Insights from Deliverable 3
+
+- Model comparison using F1, ROC, and confusion matrix provides stronger evidence than accuracy alone.
+- Hyperparameter tuning improved classifier selection quality by using cross-validated search.
+- K-Means exposed distinct customer behavior groups that can guide targeted strategy.
+- Association rules surfaced interpretable patterns useful for operational decision-making.
+
+### Challenges and Mitigations
+
+- **Challenge**: Potential class imbalance effects on naive accuracy interpretation.
+  - **Resolution**: Prioritized F1 score and ROC analysis alongside confusion matrices.
+- **Challenge**: High-dimensional numeric behavior may be hard to visualize directly.
+  - **Resolution**: Used PCA projection for clear cluster visualization.
+- **Challenge**: Association rules require categorical transaction-like inputs.
+  - **Resolution**: Applied quantile binning and tokenization before Apriori mining.
+
 ## Files
 
 - `deliverable1_data_collection_cleaning_exploration.ipynb`: Full notebook with code, explanations, and visualizations.
 - `deliverable2_regression_modeling_performance_evaluation.ipynb`: Feature engineering, multiple regression models, cross-validation, metrics, visual comparison, and conclusions.
-- `README.md`: Summary of dataset, cleaning, modeling process, insights, and challenges across deliverables.
+- `deliverable3_classification_clustering_pattern_mining.ipynb`: Classification, hyperparameter tuning, confusion matrix/ROC/F1 evaluation, clustering, association rules, and practical insights.
+- `README.md`: Summary of dataset, modeling process, insights, practical relevance, and challenges across deliverables.
