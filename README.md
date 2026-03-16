@@ -1,4 +1,4 @@
-# Advanced Data Mining Project - Deliverable 1
+# Advanced Data Mining Project - Deliverables 1 and 2
 
 ## Dataset Summary
 
@@ -54,7 +54,54 @@ This dataset is appropriate for the project because it has sufficient size and d
 - **Challenge**: Potential influence of extreme values.
   - **Resolution**: Used IQR-based capping to reduce noise impact while preserving records.
 
+## Deliverable 2: Regression Modeling and Performance Evaluation
+
+### Objective
+
+Predict `Monetary_Value` using engineered behavioral features and compare multiple regression models with holdout and cross-validation metrics.
+
+### Feature Engineering Applied
+
+- `purchase_freq_interaction` = `Purchase_History * Transaction_Frequency`
+- `engagement_time_interaction` = `Engagement_Score * Time_on_Site`
+- `browsing_per_visit` = `Browsing_Behavior / (Transaction_Frequency + 1)`
+- `purchase_per_visit` = `Purchase_History / (Transaction_Frequency + 1)`
+
+These engineered features were designed to capture interaction intensity and normalized behavior rates that are not visible in raw features alone.
+
+### Regression Models Built
+
+1. Linear Regression
+2. Ridge Regression
+3. Lasso Regression
+
+### Evaluation Approach
+
+- Holdout split: 80/20 train-test split with fixed random seed (`random_state=42`)
+- Metrics: R-squared (`R2`), Mean Squared Error (`MSE`), Root Mean Squared Error (`RMSE`)
+- Generalization check: 5-fold cross-validation using mean CV R2 and mean CV RMSE
+
+### Model Comparison Summary
+
+- The notebook generates a comparison table for all models and ranks them by cross-validation RMSE (lower is better).
+- The best model is selected using CV RMSE to prioritize expected performance on unseen data.
+- Residual diagnostics are included to validate prediction error patterns.
+
+### Key Insights from Deliverable 2
+
+- Engineered interaction and ratio features improved the model's ability to capture behavioral effects.
+- Regularization methods (Ridge/Lasso) provide stability when correlated predictors exist.
+- Cross-validation results are emphasized over a single split to reduce overfitting risk in model selection.
+
+### Challenges and Mitigations
+
+- **Challenge**: Behavioral predictors have weak simple linear relationships.
+  - **Resolution**: Added interaction and normalized ratio features to increase expressive power.
+- **Challenge**: Risk of selecting a model from one favorable split.
+  - **Resolution**: Used 5-fold cross-validation as the primary ranking signal.
+
 ## Files
 
 - `deliverable1_data_collection_cleaning_exploration.ipynb`: Full notebook with code, explanations, and visualizations.
-- `README.md`: Summary of dataset, cleaning process, key findings, and challenges.
+- `deliverable2_regression_modeling_performance_evaluation.ipynb`: Feature engineering, multiple regression models, cross-validation, metrics, visual comparison, and conclusions.
+- `README.md`: Summary of dataset, cleaning, modeling process, insights, and challenges across deliverables.
